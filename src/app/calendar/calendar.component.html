@@ -1,0 +1,14 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let header of csvHeaders">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of csvRows">
+      <td *ngFor="let cell of row">{{ cell }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<input type="file" (change)="onFileSelected($event)">
