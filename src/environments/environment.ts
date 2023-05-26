@@ -1,11 +1,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "<YOUR_API_KEY>",
-    authDomain: "<YOUR_PROJECT_ID>.firebaseapp.com",
-    databaseURL: "https://<YOUR_PROJECT_ID>.firbaseio.com",
-    projectId: "<YOUR_PROJECT_ID>",
-    storageBucket: "<YOUR_PROJECT_ID>.appspot.com",
-    messagingSenderId: "<YOUR_SENDER_ID>"
+      apiKey: "AIzaSyC9PN2JY7nM9kKYGGMrKfWRdrBUNcH98VQ",
+      authDomain: "schedulemakerlmp.firebaseapp.com",
+      databaseURL: "https://schedulemakerlmp-default-rtdb.firebaseio.com",
+      projectId: "schedulemakerlmp",
+      storageBucket: "schedulemakerlmp.appspot.com",
+      messagingSenderId: "522450878035",
+      appId: "1:522450878035:web:3b7668e9efb33fc61890a6"
   }
 };
