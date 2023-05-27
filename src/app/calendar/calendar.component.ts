@@ -3,6 +3,8 @@ import * as Papa from 'papaparse';
 import { NgForm } from '@angular/forms';
 import { BdServiceService } from '../bd-service.service';
 import { Clases } from '../interfaces/clase';
+import { saveAs } from 'file-saver';
+import * as moment from 'moment';
 
 interface Class {
   docente: string,
@@ -19,10 +21,11 @@ interface Class {
 })
 export class CalendarComponent {
   title = 'ScheduleMaker';
-  displayedColumns: string[] = ['grupo', 'materia', 'profesor', 'frecuencia', 'horarioo'];
+  displayedColumns: string[] = ['grupo', 'materia', 'profesor', 'frecuencia', 'horario'];
   csvHeaders: string[] = [];
   csvRows: string[][] = [];
   dataSource: any[] = [];
+  schedule: any[] = [];
   csvData: string = ''
 
   constructor(private db: BdServiceService) { }
@@ -65,11 +68,41 @@ export class CalendarComponent {
       console.log(this.dataSource)
 
       this.csvHeaders = parsedData[0] as string[];
-      //this.csvRows = parsedData.slice(1) as string[][];
+      this.generateSchedule(this.dataSource);
+
+
     };
-    this.getClases();
-    //this.postClases();
+  }
+
+  generateSchedule(clases: any[]) {
+    this.schedule = [];
+    const usedMaterias: string[] = []
+
+    clases.sort((a, b) => a.horario.localeCompare(b.horario))
+
+    for (const c of clases) {
+      if (usedMaterias.includes(c.materia)) continue
+
+      const overlappingClass = this.schedule.find(s => {
+        var [start1, end1] = s.horario.split('-');
+        var [start2, end2] = c.horario.split('-');
+        console.log(start1, end1, start2, end2);
+      
+        start1 = parseInt(start1.replace(':', ''), 10);
+        start2 = parseInt(start2.replace(':', ''), 10);
+        end1 = parseInt(end1.replace(':', ''), 10);
+        end2 = parseInt(end2.replace(':', ''), 10);
+        return end1 > start2 && start1 < end2;
+      });
+
+      if (overlappingClass) continue
+
+      this.schedule.push(c)
+      usedMaterias.push(c.materia)
+    }
     
+
+    console.log(this.schedule);
   }
 
   getClases() : any {
@@ -100,6 +133,37 @@ export class CalendarComponent {
         console.log("Eliminando: "+this.grupos[i].id)
        }) 
     }
+  }
+
+  saveSchedule() {
+    console.log(this.schedule);
+    const csvData = this.schedule;
+
+    const csvHeaders = [
+      'Grupo',
+      'Materia',
+      'Docente',
+      'Frecuencia',
+      'Horario',
+    ];
+
+    const blob = new Blob([this.convertToCsv(csvData, csvHeaders)], {
+      type: 'text/csv;charset=utf-8',
+    });
+
+    saveAs(blob, 'schedule.csv');
+  }
+
+  private convertToCsv(data: any[], headers: string[]): string {
+    const csvHeader = headers.join(',');
+    console.log(data);
+    const csvRows = data.map(row =>
+      headers
+        .map(header => JSON.stringify(row[header]))
+        .join(',')
+    );
+    console.log(csvHeader, csvRows);
+    return [csvHeader, ...csvRows].join('\r\n');
   }
 
   docente: string = "";
