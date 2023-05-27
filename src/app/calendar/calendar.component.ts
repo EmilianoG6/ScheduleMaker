@@ -140,11 +140,11 @@ export class CalendarComponent {
     const csvData = this.schedule;
 
     const csvHeaders = [
-      'Grupo',
-      'Materia',
-      'Docente',
-      'Frecuencia',
-      'Horario',
+      'grupo',
+      'materia',
+      'docente',
+      'frecuencia',
+      'horario',
     ];
 
     const blob = new Blob([this.convertToCsv(csvData, csvHeaders)], {
@@ -159,8 +159,8 @@ export class CalendarComponent {
     console.log(data);
     const csvRows = data.map(row =>
       headers
-        .map(header => JSON.stringify(row[header]))
-        .join(',')
+        .map(fieldName => JSON.stringify(row[fieldName], (key, value) => (value === null ? '' : value)))
+        .join(','),
     );
     console.log(csvHeader, csvRows);
     return [csvHeader, ...csvRows].join('\r\n');
