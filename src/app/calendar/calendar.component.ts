@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import * as Papa from 'papaparse';
 import { NgForm } from '@angular/forms';
 import { BdServiceService } from '../bd-service.service';
-import { Clases } from '../interfaces/clase';
+import { Clases } from '../interfaces/clase'
 import { saveAs } from 'file-saver';
-import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 
 interface Class {
   docente: string,
@@ -20,6 +20,8 @@ interface Class {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent {
+  constructor(private db: BdServiceService, private http: HttpClient) { }
+
   title = 'ScheduleMaker';
   displayedColumns: string[] = ['grupo', 'materia', 'profesor', 'frecuencia', 'horario'];
   csvHeaders: string[] = [];
@@ -27,9 +29,6 @@ export class CalendarComponent {
   dataSource: any[] = [];
   schedule: any[] = [];
   csvData: string = ''
-
-  constructor(private db: BdServiceService) { }
-   
   grupos: Clases[] = [];
   nuevoGrupo : Class = {
     docente: "",
@@ -39,11 +38,6 @@ export class CalendarComponent {
     nombre: ""
   };
   indices : any = [];
-
-  ngOnInit() : void {
-    console.log(this.grupos)
-    console.log(this.indices)
-  }
 
 
   onFileSelected(event: any) {
@@ -59,20 +53,16 @@ export class CalendarComponent {
         skipEmptyLines: true
       };
       const parsedData = Papa.parse(this.csvData).data;
-      console.log(parsedData)
-
       const parsedData2 = Papa.parse(csvContent, config);
-      console.log(parsedData2)
 
       this.dataSource = parsedData2.data;
       console.log(this.dataSource)
 
-      this.dataSource.sort((a, b) => a.horario.localeCompare(b.horario))
-
       this.csvHeaders = parsedData[0] as string[];
       this.generateSchedule(this.dataSource);
 
-
+      this.getClases();
+      this.postClases();
     };
   }
 
@@ -88,7 +78,7 @@ export class CalendarComponent {
       const overlappingClass = this.schedule.find(s => {
         var [start1, end1] = s.horario.split('-');
         var [start2, end2] = c.horario.split('-');
-        console.log(start1, end1, start2, end2);
+        //console.log(start1, end1, start2, end2); //Muestra el intervalo de los tiempos.
       
         start1 = parseInt(start1.replace(':', ''), 10);
         start2 = parseInt(start2.replace(':', ''), 10);
@@ -102,9 +92,7 @@ export class CalendarComponent {
       this.schedule.push(c)
       usedMaterias.push(c.materia)
     }
-    
-
-    console.log(this.schedule);
+      console.log(this.schedule);
   }
 
   getClases() : any {
@@ -112,32 +100,23 @@ export class CalendarComponent {
       const Res: any = res;
       const Array = Object.keys(res).forEach((key: any) => {       
       if(Res[key] != null){
-        (this.grupos).push(Res[key]);
-        (this.indices).push(key);
-        }    
+        (this.grupos).push(Res[key]); //Obtiene las clases.
+        (this.indices).push(key); //Obtiene los indices de las clases.
+        this.db.deleteClase(key).subscribe((res : any) => { //Formateo de database.
+            console.log("Eliminando: "+key)
+           }) 
+        }
       })
-      this.deleteClases(); //Para resetear la base de datos   
     })
   }
 
   postClases() : any {
-    for(let i = 0; i < this.grupos.length; i++){
-      this.grupos[i].id = this.indices[i];
-      this.db.postClase(this.grupos[i]).subscribe( res => {
-        console.log(this.grupos[i]);
-      });
+    for(let i = 0; i < this.dataSource.length; i++){
+      this.db.postClase(this.dataSource[i]).subscribe( res => { }); //Introduci las clases del CSV ingresado.
     }
   }
 
-  deleteClases(){
-    for(let i = 0; i < this.grupos.length; i++){
-      this.db.deleteClase(this.grupos[i].id).subscribe((res : any) => { 
-        console.log("Eliminando: "+this.grupos[i].id)
-       }) 
-    }
-  }
-
-  saveSchedule() {
+  saveSchedule() { //Guarda el archivo CSV del schedule made.
     console.log(this.schedule);
     const csvData = this.schedule;
 
@@ -188,7 +167,11 @@ export class CalendarComponent {
     this.nuevoGrupo["docente"] = "";
     this.nuevoGrupo["frecuencia"] = "";
     this.nuevoGrupo["horario"] = "";
-  }
+  }  
 
-  
+  obtenerClases() {
+    this.http.get<any>('http://localhost:3000/clases').subscribe((clases) => {
+      console.log(clases); // Muestra los datos en la consola del navegador
+    });
+  }
 }
