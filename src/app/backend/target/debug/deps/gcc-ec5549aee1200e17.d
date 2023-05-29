@@ -1,0 +1,12 @@
+D:\Descargas\Lenguajes Modernos\Schedule\src\app\backend\target\debug\deps\gcc-ec5549aee1200e17.rmeta: C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\lib.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\registry.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\winapi.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\com.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\setup_config.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\windows_registry.rs
+
+D:\Descargas\Lenguajes Modernos\Schedule\src\app\backend\target\debug\deps\libgcc-ec5549aee1200e17.rlib: C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\lib.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\registry.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\winapi.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\com.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\setup_config.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\windows_registry.rs
+
+D:\Descargas\Lenguajes Modernos\Schedule\src\app\backend\target\debug\deps\gcc-ec5549aee1200e17.d: C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\lib.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\registry.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\winapi.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\com.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\setup_config.rs C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\windows_registry.rs
+
+C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\lib.rs:
+C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\registry.rs:
+C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\winapi.rs:
+C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\com.rs:
+C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\setup_config.rs:
+C:\Users\emili\.cargo\registry\src\github.com-1ecc6299db9ec823\gcc-0.3.55\src\windows_registry.rs:
