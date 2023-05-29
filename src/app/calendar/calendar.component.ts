@@ -67,6 +67,8 @@ export class CalendarComponent {
       this.dataSource = parsedData2.data;
       console.log(this.dataSource)
 
+      this.dataSource.sort((a, b) => a.horario.localeCompare(b.horario))
+
       this.csvHeaders = parsedData[0] as string[];
       this.generateSchedule(this.dataSource);
 
